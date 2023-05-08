@@ -24,7 +24,7 @@ pub struct MutMatrix<T> {
 }
 
 pub struct MutMatrixBlock<'a, T> {
-    pub(crate) matrix : &'a mut MutMatrix<T>,
+    pub(crate) matrix : &'a MutMatrix<T>,
     row_range : Range<usize>,
     col_range : Range<usize>
 }
