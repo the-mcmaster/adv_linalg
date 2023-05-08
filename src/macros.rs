@@ -55,3 +55,112 @@ macro_rules! matrix {
         )
     }
 }
+
+macro_rules! vector_unsliced_immut_add {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn add(self, rhs: $rhs_type) -> Self::Output {
+            if self.len() != rhs.len() {
+                panic!("Vectors with different sizes cannot be added together.")
+            }
+            
+            let length = self.len();
+
+            let mut params = Vec::with_capacity(length);
+            for idx in 0..length {
+                params.push(self.list[idx] + rhs.list[idx])
+            }
+
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use vector_unsliced_immut_add;
+
+macro_rules! vector_right_sliced_immut_add {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn add(self, rhs: $rhs_type) -> Self::Output {
+            if self.len() != rhs.len() {
+                panic!("Vectors with different sizes cannot be added together.")
+            }
+            
+            let length = self.len();
+    
+            let mut params = Vec::with_capacity(length);
+            for idx in 0..length {
+                params.push(self.list[idx] + rhs.vector.list[idx + rhs.start()])
+            }
+    
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use vector_right_sliced_immut_add;
+
+macro_rules! vector_left_sliced_immut_add {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn add(self, rhs: $rhs_type) -> Self::Output {
+            if self.len() != rhs.len() {
+                panic!("Vectors with different sizes cannot be added together.")
+            }
+            
+            let length = rhs.len();
+    
+            let mut params = Vec::with_capacity(length);
+            for idx in 0..length {
+                params.push(self.vector.list[idx + rhs.start()] + rhs.list[idx])
+            }
+    
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use vector_left_sliced_immut_add;
+
+macro_rules! vector_both_sliced_immut_add {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn add(self, rhs: $rhs_type) -> Self::Output {
+            if self.len() != rhs.len() {
+                panic!("Vectors with different sizes cannot be added together.")
+            }
+            
+            let length = self.len();
+    
+            let mut params = Vec::with_capacity(length);
+            for idx in 0..length {
+                params.push(self.vector.list[idx + rhs.start()] + rhs.vector.list[idx + rhs.start()])
+            }
+    
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use vector_both_sliced_immut_add;
+
+macro_rules! vector_unsliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = T;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.len() != rhs.len() {
+                panic!("Cannot find dot product of two differently sized vectors.")
+            }
+    
+            let mut product = T::default();
+            
+            for idx in 0..self.len() {
+                product += self.list[idx] * rhs.list[idx]
+            }
+    
+            product
+        }
+    }
+}
+pub(crate) use vector_unsliced_immut_mul;
