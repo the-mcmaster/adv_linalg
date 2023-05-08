@@ -19,6 +19,6 @@ pub struct MutVector<T> {
 }
 
 pub struct MutVectorSlice<'a, T> {
-    pub(crate) mut_vector : &'a MutVector<T>,
+    pub(crate) vector : &'a MutVector<T>,
     slice_range : Range<usize>
 }

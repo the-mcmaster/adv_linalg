@@ -94,7 +94,7 @@ where
 {
     fn from(mut_vector_slice: MutVectorSlice<'a, T>) -> Self
     {
-        let params = mut_vector_slice.mut_vector.list
+        let params = mut_vector_slice.vector.list
             .split_at(mut_vector_slice.start()).1
             .split_at(mut_vector_slice.end()).0
             .into();
@@ -111,7 +111,7 @@ where
 {
     fn from(mut_vector_slice: &MutVectorSlice<'a, T>) -> Self
     {
-        let params = mut_vector_slice.mut_vector.list
+        let params = mut_vector_slice.vector.list
             .split_at(mut_vector_slice.start()).1
             .split_at(mut_vector_slice.end()).0
             .into();
