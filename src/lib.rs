@@ -2,6 +2,8 @@ pub mod vectors;
 
 pub mod matrices;
 
+pub mod error;
+
 pub mod traits;
 
 pub mod prelude;
