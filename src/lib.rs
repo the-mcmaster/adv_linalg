@@ -1,10 +1,7 @@
-/// Module hosting the [Vector][crate::vector_impl::Vector] type and its implementations.
-pub mod vector_impl;
+pub mod vectors;
 
-/// Module hosting the [Matrix][crate::matrix_impl::Matrix] type and its implementations.
-pub mod matrix_impl;
+pub mod matrices;
 
-/// Imports the [Vector][crate::vector_impl::Vector] and [Matrix][crate::matrix_impl::Matrix] types.
 pub mod prelude;
 
 mod macros;

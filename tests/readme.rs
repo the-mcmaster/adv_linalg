@@ -1,8 +1,8 @@
-use simp_linalg;
+use adv_linalg;
 
 #[test]
 fn macro_example() {
-    use simp_linalg::prelude::*;
+    use adv_linalg::prelude::*;
 
     let v1 = vector![1, 2, 3];
     let v2 = Vector::from(vec![1, 2, 3]);
@@ -25,7 +25,7 @@ fn macro_example() {
 #[test]
 #[allow(unused_variables)]
 fn mul_val_drop() {
-    use simp_linalg::prelude::*;
+    use adv_linalg::prelude::*;
 
     //Create two vectors
     let vector1 = vector![1, 2, 3];
@@ -38,7 +38,7 @@ fn mul_val_drop() {
 
 #[test]
 fn lambda_example() {
-    use simp_linalg::prelude::*;
+    use adv_linalg::prelude::*;
 
     // initialization
     let vector: Vector<i32> = vector![1, 2, 3];
@@ -58,7 +58,7 @@ fn lambda_example() {
 
 #[test]
 fn map_example() {
-    use simp_linalg::prelude::*;
+    use adv_linalg::prelude::*;
 
     // initialization
     // Note: this process is similar to matrix
