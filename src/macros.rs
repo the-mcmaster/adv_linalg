@@ -69,7 +69,7 @@ macro_rules! vector_unsliced_immut_add {
 
             let mut params = Vec::with_capacity(length);
             for idx in 0..length {
-                params.push(self.list[idx] + rhs.list[idx])
+                params.push(self.list[idx].clone() + rhs.list[idx].clone())
             }
 
             Vector::from(params)
@@ -91,7 +91,7 @@ macro_rules! vector_right_sliced_immut_add {
     
             let mut params = Vec::with_capacity(length);
             for idx in 0..length {
-                params.push(self.list[idx] + rhs.vector.list[idx + rhs.start()])
+                params.push(self.list[idx].clone() + rhs.vector.list[idx + rhs.start()].clone())
             }
     
             Vector::from(params)
@@ -113,7 +113,7 @@ macro_rules! vector_left_sliced_immut_add {
     
             let mut params = Vec::with_capacity(length);
             for idx in 0..length {
-                params.push(self.vector.list[idx + rhs.start()] + rhs.list[idx])
+                params.push(self.vector.list[idx + self.start()].clone() + rhs.list[idx].clone())
             }
     
             Vector::from(params)
@@ -135,7 +135,7 @@ macro_rules! vector_both_sliced_immut_add {
     
             let mut params = Vec::with_capacity(length);
             for idx in 0..length {
-                params.push(self.vector.list[idx + rhs.start()] + rhs.vector.list[idx + rhs.start()])
+                params.push(self.vector.list[idx + rhs.start()].clone() + rhs.vector.list[idx + rhs.start()].clone())
             }
     
             Vector::from(params)
