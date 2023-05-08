@@ -148,7 +148,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -181,7 +181,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -219,7 +219,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -257,7 +257,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -290,7 +290,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -323,7 +323,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -361,7 +361,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }
@@ -399,7 +399,7 @@ where
 
         } else {
 
-            return Err(Error::IntoVector("Cannot convert a matrix into a vector with no singular row or column."));
+            return Err(Error::MatrixOversize("Cannot convert a matrix into a vector with no singular row or column."));
 
         }
     }

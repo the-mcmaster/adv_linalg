@@ -1,4 +1,5 @@
 pub enum Error {
-    IntoVector(&'static str),
+    MatrixOversize(&'static str),
+    RangeOverflow(&'static str),
     IntoMatrix(&'static str)
 }
