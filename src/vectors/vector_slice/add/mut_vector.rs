@@ -30,3 +30,17 @@ where
 {
     vector_left_sliced_immut_add!(&MutVector<T>);
 }
+
+impl<'l, 'r, T> Add<&'r mut MutVector<T>> for VectorSlice<'l, T>
+where
+    T: Clone + Add<Output = T>
+{
+    vector_left_sliced_immut_add!(&'r mut MutVector<T>);
+}
+
+impl<'l, 'r, T> Add<&'r mut MutVector<T>> for &VectorSlice<'l, T>
+where
+    T: Clone + Add<Output = T>
+{
+    vector_left_sliced_immut_add!(&'r mut MutVector<T>);
+}
