@@ -1,6 +1,6 @@
 use std::ops::Add;
 use crate::Vector;
-use crate::macros::vector_unsliced_immut_add;
+use crate::macros::add::vector_unsliced_immut_add;
 
 impl<T> Add<Vector<T>> for Vector<T>
 where

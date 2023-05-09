@@ -1,7 +1,7 @@
 use std::ops::Add;
 use crate::Vector;
 use crate::vectors::MutVector;
-use crate::macros::{vector_unsliced_immut_add, vector_unsliced_mut_add};
+use crate::macros::add::{vector_unsliced_immut_add, vector_unsliced_mut_add};
 
 // -----Mut Adds-----
 impl<'l, T> Add<MutVector<T>> for &'l mut MutVector<T>

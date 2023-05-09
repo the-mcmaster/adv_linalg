@@ -1,7 +1,7 @@
 use std::ops::Add;
 use crate::Vector;
 use crate::vectors::MutVector;
-use crate::macros::vector_unsliced_immut_add;
+use crate::macros::add::vector_unsliced_immut_add;
 
 impl<T> Add<MutVector<T>> for Vector<T>
 where

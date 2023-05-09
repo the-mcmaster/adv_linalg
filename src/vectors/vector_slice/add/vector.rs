@@ -1,7 +1,7 @@
 use std::ops::Add;
 use crate::Vector;
 use crate::vectors::VectorSlice;
-use crate::macros::vector_left_sliced_immut_add;
+use crate::macros::add::vector_left_sliced_immut_add;
 
 impl<'l, T> Add<Vector<T>> for VectorSlice<'l, T>
 where
