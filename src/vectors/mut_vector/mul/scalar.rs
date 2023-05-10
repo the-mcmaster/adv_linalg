@@ -1,6 +1,7 @@
 use std::ops::{Mul, Add};
-
-use crate::{Vector, vectors::MutVector, macros::mul::{vector_mut_scaled, vector_unsliced_immut_scaled}};
+use crate::Vector;
+use crate::vectors::MutVector;
+use crate::macros::mul::{vector_mut_scaled, vector_unsliced_immut_scaled};
 
 // -----Mut Multiplications-----
 impl<'r, T> Mul<T> for &'r mut MutVector<T>

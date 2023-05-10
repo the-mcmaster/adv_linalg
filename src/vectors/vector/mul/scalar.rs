@@ -1,6 +1,6 @@
 use std::ops::Mul;
-
-use crate::{Vector, macros::mul::vector_unsliced_immut_scaled};
+use crate::Vector;
+use crate::macros::mul::vector_unsliced_immut_scaled;
 
 impl<T> Mul<T> for Vector<T>
 where

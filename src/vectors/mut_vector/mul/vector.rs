@@ -1,6 +1,7 @@
 use std::ops::{Mul, Add};
-
-use crate::{vectors::MutVector, macros::mul::dot_product_unsliced, Vector};
+use crate::Vector;
+use crate::vectors::MutVector;
+use crate::macros::mul::dot_product_unsliced;
 
 impl<T> Mul<Vector<T>> for MutVector<T>
 where

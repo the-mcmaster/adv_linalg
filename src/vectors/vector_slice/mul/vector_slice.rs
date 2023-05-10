@@ -1,5 +1,4 @@
 use std::ops::{Mul, Add};
-
 use crate::vectors::VectorSlice;
 use crate::macros::mul::dot_product_both_sliced;
 

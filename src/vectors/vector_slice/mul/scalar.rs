@@ -1,6 +1,7 @@
 use std::ops::Mul;
-
-use crate::{Vector, vectors::VectorSlice, macros::mul::vector_sliced_immut_scaled};
+use crate::Vector;
+use crate::vectors::VectorSlice;
+use crate::macros::mul::vector_sliced_immut_scaled;
 
 impl<'l, T> Mul<T> for VectorSlice<'l, T>
 where
