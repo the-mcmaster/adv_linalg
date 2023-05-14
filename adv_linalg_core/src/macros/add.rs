@@ -192,7 +192,7 @@ macro_rules! matrix_left_sliced_immut_add {
             for row_idx in 0..rhs.rows {
                 let mut param_row = Vec::with_capacity(rhs.cols);
 
-                for col_idx in 0..self.cols {
+                for col_idx in 0..rhs.cols {
                     param_row.push(self.matrix.matrix[row_idx + self.row_start()][col_idx + self.col_start()].clone() + rhs.matrix[row_idx][col_idx].clone())
                 }
                 
