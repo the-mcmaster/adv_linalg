@@ -1,0 +1,20 @@
+[package]
+name = "adv_linalg"
+version = "0.2.0"
+edition = "2021"
+
+description = "A generically defined linear algebra library with high-level syntax with low-level performance."
+license = "MIT"
+repository = "https://github.com/the-mcmaster/adv_linalg"
+keywords = ["linear-algebra", "vector", "matrix"]
+categories = ["mathematics", "science"]
+
+[workspace]
+members = [
+    "adv_linalg_core",
+    "adv_linalg_proc_macro"
+]
+
+[dependencies]
+adv_linalg_core = { path = "./adv_linalg_core" }
+adv_linalg_proc_macro = { path = "./adv_linalg_proc_macro" }
