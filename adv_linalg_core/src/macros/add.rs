@@ -243,7 +243,7 @@ macro_rules! matrix_sliced_mut_add {
     
             for row_idx in 0..self.rows {
                 for col_idx in 0..self.cols {
-                    self.matrix[row_idx][col_idx] = self.matrix[row_idx][col_idx].clone() + rhs.matrix.matrix[row_idx + rhs.row_start()][col_idx + rhs.cols_start()].clone()
+                    self.matrix[row_idx][col_idx] = self.matrix[row_idx][col_idx].clone() + rhs.matrix.matrix[row_idx + rhs.row_start()][col_idx + rhs.col_start()].clone()
                 }
             }
     
@@ -264,7 +264,7 @@ macro_rules! matrix_unsliced_mut_add {
     
             for row_idx in 0..self.rows {
                 for col_idx in 0..self.cols {
-                    self.matrix[row_idx][col_idx] = self.matrix[row_idx][col_idx].clone() + rhs.matrix.matrix[row_idx][col_idx].clone()
+                    self.matrix[row_idx][col_idx] = self.matrix[row_idx][col_idx].clone() + rhs.matrix[row_idx][col_idx].clone()
                 }
             }
     
