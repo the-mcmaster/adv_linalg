@@ -36,14 +36,14 @@ impl<'a, T> VectorSlice<'a, T> {
             
             return Err(Error::RangeUnderflow("Slice range was empty"))
         
-        } else if self.vector.len() >= slice_range.end {
+        } else if slice_range.end >= self.vector.len() {
             
             return Err(Error::RangeOverflow("Slice range end exceeded the length of the relative vector"));
         
         } else {
             
             self.slice_range = slice_range;
-            return Ok(())
+            return Ok(());
         
         }
     }
