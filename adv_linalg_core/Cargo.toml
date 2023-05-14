@@ -3,8 +3,7 @@ name = "adv_linalg_core"
 version = "0.2.0"
 edition = "2021"
 
-description = "A generically defined, light-weight linear algebra library for simple addition and multiplication of vectors and matrices."
+description = "A generically defined linear algebra library for simple addition and multiplication of vectors and matrices."
 license = "MIT"
-repository = "https://github.com/the-mcmaster/simp_linalg"
 keywords = ["linear-algebra", "vector", "matrix"]
 categories = ["mathematics", "science"]
