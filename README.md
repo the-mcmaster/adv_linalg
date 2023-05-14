@@ -6,20 +6,22 @@
     - [X] Vectors/Vectors
         - [X] Addition
         - [X] Multiplication
+            - [X] Dot Product
+            - [X] Scalar
         - [X] Second-Order Functionality
-        - [X] Lambda
-        - [X] Map
+            - [X] Lambda
+            - [X] Map
         - [X] Mutable Vector
-    - [ ] Matrices/Vectors
-        - [ ] Multiplication
     - [ ] Matrices/Matrices
         - [ ] Addition
         - [ ] Multiplication
-        - [ ] Matrix/Matrix
-        - [ ] Matrix/Vector
-        - [ ] Second-Order Functionality
-        - [ ] Lambda
-       	- [ ] Map
+            - [ ] Matrix/Matrix
+            - [ ] Matrix/Vector
+            - [ ] Scalar
+        - [X] Second-Order Functionality
+            - [X] Lambda
+            - [X] Map
+        - [ ] Mutable Matrix
 
 - [ ] Procedural Macro Features
     - [ ] Automatic Parallelization
