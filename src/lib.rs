@@ -1,7 +1,6 @@
-//! Adv_LinAlg: An optimizable linear algebra.
+//! Adv_LinAlg_Core: The heart of Adv_LinAlg.
 //! 
-//! This library aims to give the tools to developers to optimize vector
-//! and matrix operations as far as they like.
+//! This crate store all the types and their implementations for Adv_LinAlg.
 //! 
 //! ## Basic types
 //! The two main types in this library are the [Vector][crate::Vector] and the
@@ -43,8 +42,8 @@
 //! [MutMatrix][crate::matrices::MutMatrix] to allow control of element-wise
 //! mutability with identifier mutability.
 //! ```
-//! use adv_linalg::prelude::*;
-//! use adv_linalg::vectors::MutVector;
+//! use adv_linalg_core::prelude::*;
+//! use adv_linalg_core::vectors::MutVector;
 //! 
 //! let vector1 = vector![1., 2., 3.];
 //! let vector2 = vector![4., 5., 6.];

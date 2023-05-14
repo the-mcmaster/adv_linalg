@@ -1,5 +1,5 @@
 [package]
-name = "adv_linalg"
+name = "adv_linalg_core"
 version = "0.2.0"
 edition = "2021"
 
