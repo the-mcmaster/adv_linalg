@@ -133,3 +133,69 @@ macro_rules! vector_mut_scaled {
     }
 }
 pub(crate) use vector_mut_scaled;
+
+macro_rules! matrix_unsliced_immut_scaled {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            let mut params = Vec::with_capacity(self.rows);
+    
+            for row_idx in 0..self.rows {
+                let mut params_row = Vec::with_capacity(self.cols);
+                
+                for col_idx in 0..self.cols {
+                    params_row.push(self.matrix[row_idx][col_idx].clone() * rhs.clone())
+                }
+                
+                params.push(params_row)
+            }
+            
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_unsliced_immut_scaled;
+
+macro_rules! matrix_sliced_immut_scaled {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            let mut params = Vec::with_capacity(self.rows());
+    
+            for row_idx in self.row_start()..self.row_end() {
+                let mut params_row = Vec::with_capacity(self.cols());
+                
+                for col_idx in self.col_start()..self.col_end() {
+                    params_row.push(self.matrix.matrix[row_idx][col_idx].clone() * rhs.clone())
+                }
+                
+                params.push(params_row)
+            }
+            
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_sliced_immut_scaled;
+
+macro_rules! matrix_mut_scaled {
+    ($rhs_type:ty) => {
+        type Output = Self;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            
+            for row_idx in 0..self.rows {
+                
+                for col_idx in 0..self.cols {
+                    self.matrix[row_idx][col_idx] = self.matrix[row_idx][col_idx].clone() * rhs.clone()
+                }
+                
+            }
+    
+            self
+        }
+    }
+}
+pub(crate) use matrix_mut_scaled;
