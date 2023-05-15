@@ -18,7 +18,7 @@
         - [ ] Multiplication
             - [ ] Matrix/Matrix
             - [ ] Matrix/Vector
-            - [ ] Scalar
+            - [X] Scalar
         - [X] Subtraction
         - [X] Second-Order Functionality
             - [X] Lambda
