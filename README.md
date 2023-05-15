@@ -8,16 +8,18 @@
         - [X] Multiplication
             - [X] Dot Product
             - [X] Scalar
+        - [X] Subtraction
         - [X] Second-Order Functionality
             - [X] Lambda
             - [X] Map
         - [X] Mutable Vector
     - [ ] Matrices/Matrices
-        - [ ] Addition
+        - [X] Addition
         - [ ] Multiplication
             - [ ] Matrix/Matrix
             - [ ] Matrix/Vector
             - [ ] Scalar
+        - [X] Subtraction
         - [X] Second-Order Functionality
             - [X] Lambda
             - [X] Map
