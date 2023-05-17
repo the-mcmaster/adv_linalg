@@ -377,8 +377,18 @@ macro_rules! matrix_matrix_sliced_mut_mul {
                 panic!("The left matrix row count is not equal to the right matrix column count.")
             }
     
+            if self.cols < rhs.cols() {
+                for row in &mut self.matrix {
+                    row.resize(rhs.cols(), T::default());
+                }
+            }
+
             for row_index in 0..self.rows {
+
+                let mut param_row = Vec::with_capacity(rhs.rows());
+
                 for col_index in 0..rhs.cols() {
+                    
                     let mut param_buffer = T::default();
                     
                     for index in 0..self.cols {
@@ -399,10 +409,16 @@ macro_rules! matrix_matrix_sliced_mut_mul {
                         param_buffer = param_buffer + lhs_value * rhs_value
                     }
     
-                    self.matrix[row_index][col_index] = param_buffer
+                    param_row.push(param_buffer)
                 }
+
+                self.matrix[row_index] = param_row;
+
             }
+            
+            self.cols = rhs.cols();
             self
+        
         }
     }
 }
@@ -416,11 +432,21 @@ macro_rules! matrix_matrix_unsliced_mut_mul {
             if self.cols != rhs.rows {
                 panic!("The left matrix row count is not equal to the right matrix column count.")
             }
+
+            if self.cols < rhs.cols {
+                for row in &mut self.matrix {
+                    row.resize(rhs.cols, T::default());
+                }
+            }
     
             for row_index in 0..self.rows {
+                
+                let mut param_row = Vec::with_capacity(rhs.rows);
+
                 for col_index in 0..rhs.cols {
-                    let mut param_buffer = T::default();
                     
+                    let mut param_buffer = T::default();
+
                     for index in 0..self.cols {
                         let lhs_row_ptr = self.matrix[row_index].as_ptr();
                         let lhs_value: T;
@@ -439,10 +465,17 @@ macro_rules! matrix_matrix_unsliced_mut_mul {
                         param_buffer = param_buffer + lhs_value * rhs_value
                     }
     
-                    self.matrix[row_index][col_index] = param_buffer
+                    param_row.push(param_buffer);
+
                 }
+
+                self.matrix[row_index] = param_row;
+
             }
+
+            self.cols = rhs.cols;
             self
+        
         }
     }
 }
