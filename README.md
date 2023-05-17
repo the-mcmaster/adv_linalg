@@ -16,7 +16,7 @@
     - [ ] Matrices/Matrices
         - [X] Addition
         - [ ] Multiplication
-            - [ ] Matrix/Matrix
+            - [X] Matrix/Matrix
             - [ ] Matrix/Vector
             - [X] Scalar
         - [X] Subtraction
