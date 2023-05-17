@@ -199,3 +199,251 @@ macro_rules! matrix_mut_scaled {
     }
 }
 pub(crate) use matrix_mut_scaled;
+
+macro_rules! matrix_matrix_unsliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.rows {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            let mut params: Vec<Vec<T>> = vec![Vec::with_capacity(rhs.cols); self.rows];
+    
+            for row_index in 0..self.rows {
+                for col_index in 0..rhs.cols {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols {
+                        let lhs_row_ptr = self.matrix[row_index].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index)).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix[index].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index)).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    params[row_index].push(param_buffer)
+                }
+            }
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_matrix_unsliced_immut_mul;
+
+macro_rules! matrix_matrix_left_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols() != rhs.rows {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            let mut params: Vec<Vec<T>> = vec![Vec::with_capacity(rhs.cols); self.rows()];
+    
+            for row_index in 0..self.rows() {
+                for col_index in 0..rhs.cols {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols() {
+                        let lhs_row_ptr = self.matrix.matrix[row_index + self.row_start()].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index + self.col_start())).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix[index].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index)).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    params[row_index].push(param_buffer)
+                }
+            }
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_matrix_left_sliced_immut_mul;
+
+macro_rules! matrix_matrix_right_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.rows() {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            let mut params: Vec<Vec<T>> = vec![Vec::with_capacity(rhs.cols()); self.rows];
+    
+            for row_index in 0..self.rows {
+                for col_index in 0..rhs.cols() {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols {
+                        let lhs_row_ptr = self.matrix[row_index].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index)).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix.matrix[index + rhs.row_start()].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index + rhs.col_start())).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    params[row_index].push(param_buffer)
+                }
+            }
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_matrix_right_sliced_immut_mul;
+
+macro_rules! matrix_matrix_both_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Matrix<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols() != rhs.rows() {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            let mut params: Vec<Vec<T>> = vec![Vec::with_capacity(rhs.cols()); self.rows()];
+    
+            for row_index in 0..self.rows() {
+                for col_index in 0..rhs.cols() {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols() {
+                        let lhs_row_ptr = self.matrix.matrix[row_index + self.row_start()].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index + self.col_start())).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix.matrix[index + rhs.row_start()].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index + rhs.col_start())).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    params[row_index].push(param_buffer)
+                }
+            }
+            Matrix::from(params)
+        }
+    }
+}
+pub(crate) use matrix_matrix_both_sliced_immut_mul;
+
+macro_rules! matrix_matrix_sliced_mut_mul {
+    ($rhs_type:ty) => {
+        type Output = Self;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.rows() {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            for row_index in 0..self.rows {
+                for col_index in 0..rhs.cols() {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols {
+                        let lhs_row_ptr = self.matrix[row_index].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index)).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix.matrix[index + rhs.row_start()].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index + rhs.col_start())).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    self.matrix[row_index][col_index] = param_buffer
+                }
+            }
+            self
+        }
+    }
+}
+pub(crate) use matrix_matrix_sliced_mut_mul;
+
+macro_rules! matrix_matrix_unsliced_mut_mul {
+    ($rhs_type:ty) => {
+        type Output = Self;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.rows {
+                panic!("The left matrix row count is not equal to the right matrix column count.")
+            }
+    
+            for row_index in 0..self.rows {
+                for col_index in 0..rhs.cols {
+                    let mut param_buffer = T::default();
+                    
+                    for index in 0..self.cols {
+                        let lhs_row_ptr = self.matrix[row_index].as_ptr();
+                        let lhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            lhs_value = (*lhs_row_ptr.add(index)).clone()
+                        }
+                        
+                        let rhs_row_ptr = rhs.matrix[index].as_ptr();
+                        let rhs_value: T;
+                        // SAFTEY: The initial test guarentees that valid memory will be pointed to.
+                        unsafe {
+                            rhs_value = (*rhs_row_ptr.add(col_index)).clone()
+                        }
+                        
+                        param_buffer = param_buffer + lhs_value * rhs_value
+                    }
+    
+                    self.matrix[row_index][col_index] = param_buffer
+                }
+            }
+            self
+        }
+    }
+}
+pub(crate) use matrix_matrix_unsliced_mut_mul;
