@@ -28,9 +28,7 @@
 - [ ] Procedural Macro Features
     - [ ] Automatic Parallelization
         - [ ] GPU Acceleration
-            - [ ] Nvidia
-            - [ ] AMD
-            - [ ] Intel
+            - [ ] OpenCL
         - [ ] CPU Threading
     - [ ] BLAS Compliant
         - [ ] Level 1
@@ -39,3 +37,8 @@
     - [ ] SIMD Support
     - [ ] Automatic Preallocation
     - [ ] Pretty Compiler Error Messages
+
+## Up Next
+
+- Library Core:      Matrix * Vector
+- Procedural Macros: Automatic Preallocation
