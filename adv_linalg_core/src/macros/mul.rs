@@ -480,3 +480,210 @@ macro_rules! matrix_matrix_unsliced_mut_mul {
     }
 }
 pub(crate) use matrix_matrix_unsliced_mut_mul;
+
+macro_rules! matrix_vector_unsliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows);
+
+            let vector_ptr = rhs.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row in &self.matrix {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = row.as_ptr();
+                
+                for col_index in 0..self.cols {
+                    unsafe {
+                        param_buffer = param_buffer + (*row_ptr.add(col_index)).clone() * (*vector_ptr.add(col_index)).clone()
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use matrix_vector_unsliced_immut_mul;
+
+macro_rules! matrix_vector_left_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols() != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows);
+
+            let vector_ptr = rhs.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row_index in self.col_start()..self.col_end() {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = self.matrix.matrix[row_index].as_ptr();
+                
+                for col_index in 0..self.cols() {
+                    unsafe {
+                        param_buffer += *row_ptr.add(col_index + self.col_start()) * *vector_ptr.add(col_index)
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use matrix_vector_left_sliced_immut_mul;
+
+macro_rules! matrix_vector_right_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows);
+
+            let vector_ptr = rhs.vector.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row in &self.matrix {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = row.as_ptr();
+                
+                for col_index in 0..self.cols {
+                    unsafe {
+                        param_buffer = param_buffer + (*row_ptr.add(col_index)).clone() * (*vector_ptr.add(col_index + rhs.start())).clone()
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use matrix_vector_right_sliced_immut_mul;
+
+macro_rules! matrix_vector_both_sliced_immut_mul {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols() != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows());
+
+            let vector_ptr = rhs.vector.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row_index in self.col_start()..self.col_end() {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = self.matrix.matrix[row_index].as_ptr();
+                
+                for col_index in 0..self.cols() {
+                    unsafe {
+                        param_buffer += *row_ptr.add(col_index + self.col_start()) * *vector_ptr.add(col_index + rhs.start())
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            Vector::from(params)
+        }
+    }
+}
+pub(crate) use matrix_vector_both_sliced_immut_mul;
+
+macro_rules! matrix_vector_sliced_mut_mul {
+    ($rhs_type:ty) => {
+        type Output = Vector<T>;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows);
+
+            let vector_ptr = rhs.vector.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row in &self.matrix {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = row.as_ptr();
+                
+                for col_index in 0..self.cols() {
+                    unsafe {
+                        param_buffer += *row_ptr.add(col_index) * *vector_ptr.add(col_index + rhs.start())
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            rhs.list = params;
+            rhs
+
+        }
+    }
+}
+pub(crate) use matrix_vector_sliced_mut_mul;
+
+macro_rules! matrix_vector_unsliced_mut_mul {
+    ($rhs_type:ty) => {
+        type Output = $rhs_type;
+
+        fn mul(self, rhs: $rhs_type) -> Self::Output {
+            if self.cols != rhs.len() {
+                panic!("The matrix column count must be equal to the vector parameter count.")
+            };
+
+            let mut params = Vec::with_capacity(self.rows);
+
+            let vector_ptr = rhs.list.as_ptr();
+    
+            // SAFTEY: The previous test guarentees that valid memory will be pointed to.
+            for row in &self.matrix {
+                let mut param_buffer = T::default();
+    
+                let row_ptr = row.as_ptr();
+                
+                for col_index in 0..self.cols {
+                    unsafe {
+                        param_buffer = param_buffer + (*row_ptr.add(col_index)).clone() * (*vector_ptr.add(col_index)).clone()
+                    }
+                }
+    
+                params.push(param_buffer)
+            }
+            
+            rhs.list = params;
+            rhs
+        }
+    }
+}
+pub(crate) use matrix_vector_unsliced_mut_mul;
